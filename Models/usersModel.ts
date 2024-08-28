@@ -1,0 +1,34 @@
+import { Schema, model } from "mongoose";
+import { Users } from "../interfaces/users";
+import bcrypt from 'bcryptjs';
+
+const usersSchema: Schema = new Schema<Users>({
+  name: { type: String, required: true, trim: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true, minlength: 6, maxlength: 20 },
+  profileImage: String,
+  role: { type: String, required: true, enum: ['manager', 'admin', 'user'], default: 'user' },
+  active: { type: Boolean, default: true },
+  passwordUpdatedAt: Date,
+  resetCode: String,
+  resetCodeExpireTime: Date,
+  resetCodeVerify: Boolean
+}, { timestamps: true });
+
+const imageURL = (document:Users) => {
+  if (document.profileImage) {
+    const imageUrl: string = `${process.env.BASE_URL}/users/${document.profileImage}`;
+    document.profileImage = imageUrl;
+  }
+}
+
+usersSchema
+  .post('init', (document: Users) => { imageURL(document) })
+  // .post('save',(document: Users) => { imageURL(document) })
+
+  usersSchema.pre<Users>('save', async function (next) {
+    if (!this.isModified('password')) return next;
+    this.password = await bcrypt.hash(this.password, 12)
+  });
+
+export default model<Users>('users', usersSchema)

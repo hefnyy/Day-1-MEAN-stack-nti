@@ -1,9 +1,7 @@
 import { RequestHandler } from "express";
 import { check } from "express-validator";
-import validatorMiddleware from "../../middlewares/validators";
 import categoriesModel from "../../Models/categoriesModel";
-import { Subcategory } from "../../interfaces/subcategory";
-import subcategoryModel from "../../Models/subcategoryModel";
+import validatorMiddleWare from "../../middlewares/validators";
 
 
 export const createProductValidator: RequestHandler[] = [
@@ -52,7 +50,7 @@ export const createProductValidator: RequestHandler[] = [
       }
       return true;
     }),
-  validatorMiddleware
+    validatorMiddleWare
 ]
 
 export const updateProductValidator: RequestHandler[] = [
@@ -98,16 +96,16 @@ export const updateProductValidator: RequestHandler[] = [
       }
       return true;
     }),
-  validatorMiddleware
+    validatorMiddleWare
 ]
 
 
 export const getProductValidator: RequestHandler[] = [
   check('id').isMongoId().withMessage('Invalid Mongo Id'),
-  validatorMiddleware
+  validatorMiddleWare
 ]
 
 export const deleteProductValidator: RequestHandler[] = [
   check('id').isMongoId().withMessage('Invalid Mongo Id'),
-  validatorMiddleware
+  validatorMiddleWare
 ]

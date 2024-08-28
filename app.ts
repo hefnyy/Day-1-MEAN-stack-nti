@@ -12,6 +12,8 @@ dotenv.config();
 
 app.use(express.json())
 
+app.use(express.static('uploads'))
+
 database();
 
 mountRoutes(app);

@@ -4,7 +4,7 @@ import { Schema } from 'mongoose';
 export interface Products extends Document{
     name: string;
     category: Schema.Types.ObjectId;
-    Subcategory: Schema.Types.ObjectId;
+    subcategory: Schema.Types.ObjectId;
     description: string;
     price: number;
     priceAfterDisc: number;
