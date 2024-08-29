@@ -3,6 +3,9 @@ import { Subcategory } from './../interfaces/subcategory';
 import subcategoryModel from "../Models/subcategoryModel";
 import { FilterData } from "../interfaces/filterData";
 import { createOne, getAll, getOne, removeOne, updateOne } from "./refactorsHandler";
+import { uploadOneImage } from "../middlewares/uploadPhotos";
+import  asyncHandler  from 'express-async-handler';
+import sharp from "sharp";
 
 
 export const filterData = (req: Request, res: Response, next: NextFunction) => {
@@ -21,3 +24,14 @@ export const getSubcategory = getOne<Subcategory>(subcategoryModel);
 export const updateSubcategory = updateOne<Subcategory>(subcategoryModel);
 
 export const deleteSubcategory = removeOne<Subcategory>(subcategoryModel);
+
+export const uploadSubsubcategoryImage = uploadOneImage('subcategoryImage');
+
+export const resizeSubcategoryImage = asyncHandler(async (req:Request, res: Response, next:NextFunction) => {
+  if (req.file) {
+    const subcategoryImage: string = `SubCategory image-${Date.now()}.jpeg`
+    await sharp(req.file.buffer).toFormat('jpeg').jpeg({ quality: 100 }).toFile(`uploads/subcategories/${subcategoryImage}`);
+    req.body.subcategoryImage = subcategoryImage;
+  }
+  next();
+});

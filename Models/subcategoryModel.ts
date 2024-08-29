@@ -4,8 +4,9 @@ import { Subcategory } from "../interfaces/subcategory";
 
 
 const subCategorySchema: Schema = new Schema<Subcategory>({
-    name: {type: String, required: true, trim: true, unique: false},
-    category: {type: Schema.Types.ObjectId, required: true,ref: 'categories'}
+    name: {type: String, required: true, trim: true},
+    category: {type: Schema.Types.ObjectId, required: true,ref: 'categories'},
+    subcategoryImage: String
 },{timestamps:true});
 
 

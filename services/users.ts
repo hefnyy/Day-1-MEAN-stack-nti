@@ -6,6 +6,7 @@ import { Request, Response, NextFunction } from "express";
 import ApiErrors from "../utiles/APIErrors";
 import { uploadOneImage } from "../middlewares/uploadPhotos";
 import sharp from "sharp";
+import  bcrypt  from 'bcryptjs';
 
 
 
@@ -39,3 +40,13 @@ export const updateUser = asyncHandler(async (req: Request, res: Response, next:
     res.status(200).json({ data: user, message: 'User has been updated successfully' })
   });
 
+  export const changeUserPassword = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const user = await usersModel.findByIdAndUpdate(req.params.id, {
+      password: await bcrypt.hash(req.body.password, 12),
+      passwordUpdatedAt: Date.now()
+    }, { new: true })
+    if (!user) { 
+      return next(new ApiErrors('This user is not found', 404)) 
+    }
+    res.status(200).json({ message: 'User\'s password has been changed successfully', data: user })
+  });

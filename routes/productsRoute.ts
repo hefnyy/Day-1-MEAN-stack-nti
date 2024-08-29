@@ -1,16 +1,17 @@
 import {Router} from "express";
 import { createProduct, deleteProduct, getAllProducts, getProduct, resizeImages,  updateProduct,  uploadProductPhotos } from "../services/products";
 import { createProductValidator, deleteProductValidator, getProductValidator, updateProductValidator } from "../utiles/validation/productsValidator";
+import { allowedTo, isActive, protectRoutes } from "../services/authentication";
 
 const productsRoute: Router = Router();
 
 productsRoute.route('/')
 .get(getAllProducts)
-.post(uploadProductPhotos,resizeImages,createProductValidator,createProduct);
+.post(protectRoutes,isActive,allowedTo('manager','admin'),uploadProductPhotos,resizeImages,createProductValidator,createProduct);
 
 productsRoute.route('/:id')
 .get(getProductValidator, getProduct)
-.put(updateProductValidator,updateProduct)
-.delete(deleteProductValidator,deleteProduct)
+.put(protectRoutes,isActive,allowedTo('manager','admin'),updateProductValidator,updateProduct)
+.delete(protectRoutes,isActive,allowedTo('manager','admin'),deleteProductValidator,deleteProduct)
 
 export default productsRoute;

@@ -1,7 +1,8 @@
 import {Router} from "express";
-import { createCategory, deleteCategory, getAllCategories, getCategory, updateCategory } from "../services/categories";
+import { createCategory, deleteCategory, getAllCategories, getCategory, resizeCategoryImage, updateCategory, uploadCategoryImage } from "../services/categories";
 import { createCategoryValidator, deleteCategoryValidator, getCategoryValidator, updateCategoryValidator } from "../utiles/validation/categoriesValidator";
 import subCategoryRoute from "./subcategoriesRoute";
+import { allowedTo, isActive, protectRoutes } from "../services/authentication";
 
 
 const categoriesRoute: Router = Router();
@@ -10,11 +11,11 @@ categoriesRoute.use('/:categoryId/subcategory', subCategoryRoute);
 
 categoriesRoute.route('/')
 .get(getAllCategories)
-.post(createCategoryValidator,createCategory);
+.post(protectRoutes,isActive,allowedTo('admin','manager'),uploadCategoryImage,resizeCategoryImage,createCategoryValidator,createCategory);
 
 categoriesRoute.route('/:id')
 .get(getCategoryValidator,getCategory)
-.put(updateCategoryValidator,updateCategory)
-.delete(deleteCategoryValidator,deleteCategory)
+.put(protectRoutes,isActive,allowedTo('admin','manager'),uploadCategoryImage,resizeCategoryImage,updateCategoryValidator,updateCategory)
+.delete(protectRoutes,isActive,allowedTo('admin','manager'),deleteCategoryValidator,deleteCategory)
 
 export default categoriesRoute;
