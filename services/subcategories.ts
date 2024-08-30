@@ -35,3 +35,10 @@ export const resizeSubcategoryImage = asyncHandler(async (req:Request, res: Resp
   }
   next();
 });
+
+export const setCategoryId = (req:Request, res: Response, next:NextFunction) => {
+  if(!req.body.category){
+    req.body.Category = req.params.categoryId
+  };
+  next();
+};

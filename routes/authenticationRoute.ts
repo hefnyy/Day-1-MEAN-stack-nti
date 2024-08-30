@@ -1,15 +1,22 @@
 import {Router} from "express";
-import { createCategoryValidator, deleteCategoryValidator, getCategoryValidator, updateCategoryValidator } from "../utiles/validation/categoriesValidator";
-import {createUser, deleteUser, getAllUsers, getUser, resizeUserImage, updateUser, uploadUserImageProfile} from "../services/users"
-import { createUserValidator, deleteUserValidator, getUserValidator, updateUserValidator } from "../utiles/validation/usersValidator";
-import { login, signup } from './../services/authentication';
+import { forgetMyPassword, login, resetCodePasswordChange, signup, verifyResetCode } from './../services/authentication';
+import { loginValidator, resetCodeValidator, sendMailValidator, signupValidator } from "../utiles/validation/authenticationValidator";
 const authenticationRoute: Router = Router();
 
 authenticationRoute.route('/signup')
-    .post(createUserValidator,signup);
+    .post(signupValidator,signup);
 // .get(getAllUsers)
 authenticationRoute.route('/login')
-    .post(login);
+    .post(loginValidator,login);
+
+authenticationRoute.route('/forgetmypassword')
+    .post(sendMailValidator,forgetMyPassword);
+
+authenticationRoute.route('/verifyresetcode')
+    .post(verifyResetCode);    
+
+authenticationRoute.route('/resetcodepasswordchange')
+    .post(resetCodeValidator,resetCodePasswordChange);    
 
 // authenticationRoute.route('/:id')
 // .get(getUserValidator,getUser)

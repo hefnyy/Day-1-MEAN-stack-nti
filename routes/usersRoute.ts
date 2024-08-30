@@ -1,12 +1,19 @@
 import {Router} from "express";
-import { createCategoryValidator, deleteCategoryValidator, getCategoryValidator, updateCategoryValidator } from "../utiles/validation/categoriesValidator";
-import {changeUserPassword, createUser, deleteUser, getAllUsers, getUser, resizeUserImage, updateUser, uploadUserImageProfile} from "../services/users"
-import { createUserValidator, deleteUserValidator, getUserValidator, updateUserValidator } from "../utiles/validation/usersValidator";
+import {changeUserPassword, createUser, deleteUser, getAllUsers, getLoggedInUserData, getUser, loggedInUserChangePassword, resizeUserImage, updateLoggedInUserData, updateUser, uploadUserImageProfile} from "../services/users"
+import { changeLoggedInUserPasswordValidator, changeUserPasswordValidator, createUserValidator, deleteUserValidator, getUserValidator, updateLoggedInUserValidator, updateUserValidator } from "../utiles/validation/usersValidator";
 import { allowedTo, isActive, protectRoutes } from "../services/authentication";
+import addressRoute from "./addressesRoute";
 const usersRoute: Router = Router();
 
-usersRoute.use(protectRoutes,isActive,allowedTo('manager'))
+usersRoute.use('/:userId/address',addressRoute);
 
+usersRoute.use(protectRoutes,isActive)
+usersRoute.get('/me',getLoggedInUserData,getUser);
+usersRoute.put('/changemydata',updateLoggedInUserValidator,updateLoggedInUserData);
+usersRoute.put('/changemypassword',changeLoggedInUserPasswordValidator,loggedInUserChangePassword);
+usersRoute.delete('/deleteme',allowedTo('user'),getLoggedInUserData,deleteUser);
+
+usersRoute.use(allowedTo('manager'));
 usersRoute.route('/')
 .get(getAllUsers)
 .post(uploadUserImageProfile,resizeUserImage,createUserValidator,createUser);
@@ -16,6 +23,6 @@ usersRoute.route('/:id')
 .put(uploadUserImageProfile,resizeUserImage,updateUserValidator,updateUser)
 .delete(deleteUserValidator,deleteUser)
 
-usersRoute.put('/:id/updatePassword',changeUserPassword)
+usersRoute.put('/:id/updatePassword',changeUserPasswordValidator,changeUserPassword)
 
 export default usersRoute;

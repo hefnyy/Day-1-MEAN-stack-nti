@@ -13,36 +13,40 @@ const productsSchema: Schema = new Schema<Products>({
     sold: {type: Number, default: 0, min: 0},
     cover: {type: String},
     images: {type: [String]},
-    ratingAvg: {type: Number, default: 0, min: 0, max: 5},
+    ratingAvg: {type: Number},
     ratingCount: {type:Number, default:0, min:0}
 
-},{timestamps:true});
+},{timestamps:true,toJSON: { virtuals: true }, toObject: { virtuals: true } });
 
-const imageURL = (document: Products) => {
-    if (document.cover) {
-      const imageUrl: string = `${process.env.BASE_URL}/products/${document.cover}`;
-      document.cover = imageUrl;
-    }
-    if (document.images) {
-      const imageList: string[] = [];
-      document.images.forEach(image => {
-        const imageUrl: string = `${process.env.BASE_URL}/products/${image}`
-        imageList.push(imageUrl);
-      });
-      document.images = imageList;
-    }
-  }
-  
-  productsSchema
-    .post('init', (document: Products) => { imageURL(document) })
-    .post('save', (document: Products) => { imageURL(document) })
-
-
+productsSchema.virtual('reviews', { ref: 'reviews', foreignField: 'product', localField: '_id' })
 
 productsSchema.pre<Products>(/^find/, function (next) {
     this.populate({ path: 'category', select: 'name -_id' })
     this.populate({ path: 'subcategory', select: 'name' })
     next()
+  
   })
 
+
   export default model<Products>('products',productsSchema)
+// const imageURL = (document: Products) => {
+//     if (document.cover) {
+//       const imageUrl: string = `${process.env.BASE_URL}/products/${document.cover}`;
+//       document.cover = imageUrl;
+//     }
+//     if (document.images) {
+//       const imageList: string[] = [];
+//       document.images.forEach(image => {
+//         const imageUrl: string = `${process.env.BASE_URL}/products/${image}`
+//         imageList.push(imageUrl);
+//       });
+//       document.images = imageList;
+//     }
+//   }
+  
+  // productsSchema
+  //   .post('init', (document: Products) => { imageURL(document) })
+  //   .post('save', (document: Products) => { imageURL(document) })
+
+
+

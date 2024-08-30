@@ -7,14 +7,20 @@ import * as all from "../interfaces";
 import productsRoute from "./productsRoute";
 import usersRoute from "./usersRoute";
 import authenticationRoute from "./authenticationRoute";
+import reviewsRoute from "./reviewsRoute";
+import wishlistRoute from "./wishlistRoute";
+import addressRoute from "./addressesRoute";
 
 const mountRoutes = (app:Application):void => {
 
     app.use('/api/v1/categories',categoriesRoute)
     app.use('/api/v1/subcategory',subCategoryRoute)
     app.use('/api/v1/products', productsRoute)
+    app.use('/api/v1/wishlist', wishlistRoute)
+    app.use('/api/v1/reviews',reviewsRoute)
     app.use('/api/v1/users',usersRoute)
     app.use('/api/v1/authentication',authenticationRoute)
+    app.use('/api/v1/address',addressRoute)
 
     app.all('*',(req: Request, res: Response, next: NextFunction) => {
         next(new ApiErrors(`The route ${req.originalUrl} is not found`,400))
