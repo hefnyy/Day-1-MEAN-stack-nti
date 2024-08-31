@@ -9,7 +9,7 @@ declare namespace NodeJS{
         readonly JWT_EXPIRED_RESET_CODE_TIME: string;
         readonly APP_NAME: string;
         readonly EMAIL_PASSWORD : string;
-        readonly EMAIL_USERNAME:String;
-        readonly EMAIL_HOST:String;
+        readonly EMAIL_USERNAME:string;
+        readonly EMAIL_HOST:string;
     }
 }

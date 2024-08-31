@@ -36,6 +36,13 @@ const reviewsSchema: Schema = new Schema<Reviews>({
     await (this.constructor as any).calcRatingAvgAndQuantity(this.product) 
 })
 
+reviewsSchema.post<Reviews>('findOneAndDelete', async function(doc) {
+  const review = doc as unknown as Reviews; 
+  if (review.product) {
+      await (review.constructor as any).calcRatingAvgAndQuantity(review.product);
+  }
+});
+
  reviewsSchema.pre<Reviews>(/^find/, function (next) {
     this.populate({ path: 'user', select: 'name profileImage' })
     

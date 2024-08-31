@@ -8,7 +8,6 @@ import ApiErrors from "../utiles/APIErrors";
 import  bcrypt  from 'bcryptjs';
 import crypto from 'crypto';
 import sendEmail from "../utiles/sendEmail";
-import { appendFile } from "fs";
 
 export const signup = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const user: Users = await usersModel.create(req.body);

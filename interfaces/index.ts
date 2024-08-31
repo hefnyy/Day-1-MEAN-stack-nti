@@ -3,7 +3,7 @@ import { Users } from "./users";
 
 declare module 'express' {
   interface Request {
-        filterData?: FilterData
+        filterData?: FilterData;
         files?: any;
         user?: Users;
     }

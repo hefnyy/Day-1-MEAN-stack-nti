@@ -16,7 +16,7 @@ authenticationRoute.route('/verifyresetcode')
     .post(verifyResetCode);    
 
 authenticationRoute.route('/resetcodepasswordchange')
-    .post(resetCodeValidator,resetCodePasswordChange);    
+    .put(resetCodeValidator,resetCodePasswordChange);    
 
 // authenticationRoute.route('/:id')
 // .get(getUserValidator,getUser)

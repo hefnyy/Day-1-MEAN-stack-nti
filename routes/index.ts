@@ -1,15 +1,19 @@
+import * as all from "../interfaces";
 import { Application, Request, Response, NextFunction } from "express";
 import categoriesRoute from "./categoriesRoute";
 import subCategoryRoute from "./subcategoriesRoute";
 import ApiErrors from "../utiles/APIErrors";
 import globalErrors from "../middlewares/globalerrors";
-import * as all from "../interfaces";
 import productsRoute from "./productsRoute";
 import usersRoute from "./usersRoute";
 import authenticationRoute from "./authenticationRoute";
 import reviewsRoute from "./reviewsRoute";
 import wishlistRoute from "./wishlistRoute";
 import addressRoute from "./addressesRoute";
+import PromoCodesRoute from "./promoCodesRoute";
+import cartsRoute from "./cartsRoute";
+
+
 
 const mountRoutes = (app:Application):void => {
 
@@ -21,6 +25,8 @@ const mountRoutes = (app:Application):void => {
     app.use('/api/v1/users',usersRoute)
     app.use('/api/v1/authentication',authenticationRoute)
     app.use('/api/v1/address',addressRoute)
+    app.use('/api/v1/promocodes', PromoCodesRoute);
+    app.use('/api/v1/carts', cartsRoute);
 
     app.all('*',(req: Request, res: Response, next: NextFunction) => {
         next(new ApiErrors(`The route ${req.originalUrl} is not found`,400))
