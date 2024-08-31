@@ -28,6 +28,7 @@ const mountRoutes = (app:Application):void => {
     app.use('/api/v1/promocodes', PromoCodesRoute);
     app.use('/api/v1/carts', cartsRoute);
 
+
     app.all('*',(req: Request, res: Response, next: NextFunction) => {
         next(new ApiErrors(`The route ${req.originalUrl} is not found`,400))
             // app.use((err:Error,req:Request,res:Response,next:NextFunction) => {

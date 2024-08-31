@@ -5,7 +5,6 @@ import { allowedTo, isActive, protectRoutes } from "../services/authentication";
 import addressRoute from "./addressesRoute";
 const usersRoute: Router = Router();
 
-usersRoute.use('/:userId/address',addressRoute);
 
 usersRoute.use(protectRoutes,isActive)
 usersRoute.get('/me',getLoggedInUserData,getUser);
