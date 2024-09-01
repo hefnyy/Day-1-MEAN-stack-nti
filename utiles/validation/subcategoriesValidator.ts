@@ -7,10 +7,10 @@ import validatorMiddleWare from "../../middlewares/validators";
 export const createSubcategoryValidator: RequestHandler[] = [
   check('name')
     .notEmpty().withMessage('Subcategory Name is Required')
-    .isLength({ min: 2, max: 50 }).withMessage('Name length must be between 2 and 50'),
+    .isLength({ min: 2, max: 50 }).withMessage((val, { req }) => req.__('name_length')),
   check('category')
     .notEmpty().withMessage('Category is Required')
-    .isMongoId().withMessage('Invalid Mongo Id')
+    .isMongoId().withMessage((val, { req }) => req.__('check_id'))
     .custom(async (val) => {
       const category = await categoriesModel.findById(val);
       if (!category) {
@@ -23,9 +23,9 @@ export const createSubcategoryValidator: RequestHandler[] = [
 
 export const updateSubcategoryValidator: RequestHandler[] = [
   check('name').optional()
-    .isLength({ min: 2, max: 50 }).withMessage('Name length must be between 2 and 50'),
+    .isLength({ min: 2, max: 50 }).withMessage((val, { req }) => req.__('name_length')),
   check('category').optional()
-    .isMongoId().withMessage('Invalid Mongo Id')
+    .isMongoId().withMessage((val, { req }) => req.__('check_id'))
     .custom(async (val) => {
         const category = await categoriesModel.findById(val);
         if (!category) {
@@ -37,11 +37,11 @@ export const updateSubcategoryValidator: RequestHandler[] = [
 ]
 
 export const getSubcategoryValidator: RequestHandler[] = [
-  check('id').isMongoId().withMessage('Invalid Mongo Id'),
+  check('id').isMongoId().withMessage((val, { req }) => req.__('check_id')),
   validatorMiddleWare
 ]
 
 export const deleteSubcategoryValidator: RequestHandler[] = [
-  check('id').isMongoId().withMessage('Invalid Mongo Id'),
+  check('id').isMongoId().withMessage((val, { req }) => req.__('check_id')),
   validatorMiddleWare
 ]

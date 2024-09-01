@@ -9,9 +9,10 @@ import usersRoute from "./usersRoute";
 import authenticationRoute from "./authenticationRoute";
 import reviewsRoute from "./reviewsRoute";
 import wishlistRoute from "./wishlistRoute";
-import addressRoute from "./addressesRoute";
+// import addressRoute from "./addressesRoute";
 import PromoCodesRoute from "./promoCodesRoute";
 import cartsRoute from "./cartsRoute";
+import ordersRoute from "./ordersRoute";
 
 
 
@@ -24,9 +25,10 @@ const mountRoutes = (app:Application):void => {
     app.use('/api/v1/reviews',reviewsRoute)
     app.use('/api/v1/users',usersRoute)
     app.use('/api/v1/authentication',authenticationRoute)
-    app.use('/api/v1/address',addressRoute)
+    // app.use('/api/v1/address',addressRoute)
     app.use('/api/v1/promocodes', PromoCodesRoute);
     app.use('/api/v1/carts', cartsRoute);
+    app.use('/api/v1/orders', ordersRoute);
 
 
     app.all('*',(req: Request, res: Response, next: NextFunction) => {

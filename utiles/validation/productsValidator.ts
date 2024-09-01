@@ -7,7 +7,7 @@ import validatorMiddleWare from "../../middlewares/validators";
 export const createProductValidator: RequestHandler[] = [
   check('name')
     .notEmpty().withMessage('Product\' Name is Required')
-    .isLength({ min: 2, max: 50 }).withMessage('Name length must be between 2 and 50'),
+    .isLength({ min: 2, max: 50 }).withMessage((val, { req }) => req.__('name_length')),
 
     check('description').optional()
     .notEmpty().withMessage('Product\'s description is required' )
@@ -42,7 +42,7 @@ export const createProductValidator: RequestHandler[] = [
 
   check('category')
     .notEmpty().withMessage('Category is Required')
-    .isMongoId().withMessage('Invalid Mongo Id')
+    .isMongoId().withMessage((val, { req }) => req.__('check_id'))
     .custom(async (val) => {
       const category = await categoriesModel.findById(val);
       if (!category) {
@@ -55,7 +55,7 @@ export const createProductValidator: RequestHandler[] = [
 
 export const updateProductValidator: RequestHandler[] = [
   check('name').optional()
-    .isLength({ min: 2, max: 50 }).withMessage('Name length must be between 2 and 50'),
+    .isLength({ min: 2, max: 50 }).withMessage((val, { req }) => req.__('name_length')),
 
   check('description').optional()
     .isLength({ min: 15, max: 500 }),
@@ -88,7 +88,7 @@ export const updateProductValidator: RequestHandler[] = [
     }),
     
   check('category').optional()
-    .isMongoId().withMessage('Invalid Mongo Id')
+    .isMongoId().withMessage((val, { req }) => req.__('check_id'))
     .custom(async (val) => {
       const category = await categoriesModel.findById(val);
       if (!category) {
@@ -101,11 +101,11 @@ export const updateProductValidator: RequestHandler[] = [
 
 
 export const getProductValidator: RequestHandler[] = [
-  check('id').isMongoId().withMessage('Invalid Mongo Id'),
+  check('id').isMongoId().withMessage((val, { req }) => req.__('check_id')),
   validatorMiddleWare
 ]
 
 export const deleteProductValidator: RequestHandler[] = [
-  check('id').isMongoId().withMessage('Invalid Mongo Id'),
+  check('id').isMongoId().withMessage((val, { req }) => req.__('check_id')),
   validatorMiddleWare
 ]

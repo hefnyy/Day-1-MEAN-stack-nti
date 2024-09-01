@@ -1,4 +1,5 @@
 import { Server } from 'http';
+import path from 'path';
 import express from 'express';
 import dotenv from "dotenv";
 import compression from 'compression';
@@ -8,6 +9,7 @@ import hpp from 'hpp';
 import cors from 'cors';
 import database from './config/database';
 import mountRoutes from './routes';
+import { I18n } from 'i18n';
 
 
 const app: express.Application = express()
@@ -33,6 +35,14 @@ app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }))
 app.use(express.static('uploads'))
 
 database();
+
+const i18n = new I18n({
+    locales:['en','ar'],
+    directory: path.join(__dirname, 'locales'),
+    defaultLocale: 'en',
+    queryParameter: 'lang'  
+})
+app.use(i18n.init);
 
 mountRoutes(app);
 

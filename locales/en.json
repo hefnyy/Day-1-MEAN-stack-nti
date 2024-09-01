@@ -1,0 +1,9 @@
+{
+    "check_id":"invalid Mongo id",
+    "not_found":"Document not found",
+    "category_name":"Category Name is Required",
+    "name_length":"Name length must be between 3 and 50",
+    "cart_not_found":"Cart is not found",
+    "order_not_found":"Cart is not found"
+
+}

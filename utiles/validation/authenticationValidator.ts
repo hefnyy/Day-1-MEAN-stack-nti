@@ -6,7 +6,7 @@ import validatorMiddleWare from "../../middlewares/validators";
 export const signupValidator: RequestHandler[] = [
   check('name')
     .notEmpty().withMessage('User Name is Required')
-    .isLength({ min: 2, max: 50 }).withMessage('Name length must be between 3 and 50'),
+    .isLength({ min: 2, max: 50 }).withMessage((val, { req }) => req.__('name_length')),
   check('email')
     .notEmpty().withMessage('Email is Required')
     .isEmail().withMessage('Invalid Email')

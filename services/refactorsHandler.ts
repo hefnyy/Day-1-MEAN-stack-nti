@@ -32,7 +32,7 @@ export const getOne = <modelType>(model: mongoose.Model<any>,population?:string)
   };
   const document = await query;
   if (!document) {
-    return next(new ApiErrors('Document is not found', 404))
+    return next(new ApiErrors(`${req.__('not_found')}`, 404))
   }
   document.save();
   res.status(200).json({ data: document });
@@ -44,7 +44,7 @@ export const createOne = <modelType>(model: mongoose.Model<any>) => asyncHandler
 export const updateOne = <modelType>(model: mongoose.Model<any>) => asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const document = await model.findByIdAndUpdate(req.params.id, req.body, { new: true });
   if (!document) {
-    return next(new ApiErrors('Document not found', 404))
+    return next(new ApiErrors(`${req.__('not_found')}`, 404))
   }
   document.save();
   res.status(200).json({ data: document });
@@ -52,7 +52,7 @@ export const updateOne = <modelType>(model: mongoose.Model<any>) => asyncHandler
 export const removeOne = <modelType>(model: mongoose.Model<any>) => asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const document = await model.findOneAndDelete({_id: req.params.id});
   if (!document) {
-    return next(new ApiErrors('Document not found', 404))
+    return next(new ApiErrors(`${req.__('not_found')}`, 404))
   }
   // document.remove();
   res.status(204).json({ data: document });

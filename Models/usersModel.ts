@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import { Users } from "../interfaces/users";
 import bcrypt from 'bcryptjs';
-import { Address } from './../interfaces/addresses';
+// import { Address } from './../interfaces/addresses';
 
 const usersSchema: Schema = new Schema<Users>({
   name: { type: String, required: true, trim: true },
@@ -11,11 +11,13 @@ const usersSchema: Schema = new Schema<Users>({
   role: { type: String, required: true, enum: ['manager', 'admin', 'user'], default: 'user' },
   active: { type: Boolean, default: true },
   wishlist:[{type:Schema.Types.ObjectId,ref:'products'}],
-  address:[{type:Schema.Types.ObjectId,ref:'address'}],
-  passwordUpdatedAt: Date,
-  resetCode: String,
-  resetCodeExpireTime: Date,
-  resetCodeVerify: Boolean
+  address:[String],
+  phoneNumber:{type:Number,required:true}
+  // address:[{type:Schema.Types.ObjectId,ref:'address'}],
+  // passwordUpdatedAt: Date,
+  // resetCode: String,
+  // resetCodeExpireTime: Date,
+  // resetCodeVerify: Boolean
 }, { timestamps: true });
 
 // const imageURL = (document:Users) => {

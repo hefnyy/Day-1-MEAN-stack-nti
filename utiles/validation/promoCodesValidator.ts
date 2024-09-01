@@ -43,11 +43,11 @@ export const updatePromoCodeValidator: RequestHandler[] = [
 ]
 
 export const getPromoCodeValidator: RequestHandler[] = [
-  check('id').isMongoId().withMessage('Invalid Mongo Id'),
+  check('id').isMongoId().withMessage((val, { req }) => req.__('check_id')),
   validatorMiddleWare
 ]
 
 export const deletePromoCodeValidator: RequestHandler[] = [
-  check('id').isMongoId().withMessage('Invalid Mongo Id'),
+  check('id').isMongoId().withMessage((val, { req }) => req.__('check_id')),
   validatorMiddleWare
 ]

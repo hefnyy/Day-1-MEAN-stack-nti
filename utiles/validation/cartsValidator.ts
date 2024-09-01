@@ -5,18 +5,18 @@ import validatorMiddleWare from "../../middlewares/validators";
 export const addProductToCartValidator: RequestHandler[] = [
   check('product')
     .notEmpty().withMessage('Product required')
-    .isMongoId().withMessage('Invalid mongo id'),
+    .isMongoId().withMessage((val, { req }) => req.__('check_id')),
   validatorMiddleWare
 ]
 
 export const removeProductFromCartValidator: RequestHandler[] = [
-  check('itemId').isMongoId().withMessage('Invalid mongo id'),
+  check('itemId').isMongoId().withMessage((val, { req }) => req.__('check_id')),
     validatorMiddleWare
 
 ]
 
 export const updateProductQuantityValidator: RequestHandler[] = [
-  check('itemId').isMongoId().withMessage('Invalid mongo id'),
+  check('itemId').isMongoId().withMessage((val, { req }) => req.__('check_id')),
   check('quantity')
     .notEmpty().withMessage('Quantity required')
     .isNumeric().withMessage('Quantity must be number').toInt()

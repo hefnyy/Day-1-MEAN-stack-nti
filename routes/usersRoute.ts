@@ -2,7 +2,6 @@ import {Router} from "express";
 import {changeUserPassword, createUser, deleteUser, getAllUsers, getLoggedInUserData, getUser, loggedInUserChangePassword, resizeUserImage, updateLoggedInUserData, updateUser, uploadUserImageProfile} from "../services/users"
 import { changeLoggedInUserPasswordValidator, changeUserPasswordValidator, createUserValidator, deleteUserValidator, getUserValidator, updateLoggedInUserValidator, updateUserValidator } from "../utiles/validation/usersValidator";
 import { allowedTo, isActive, protectRoutes } from "../services/authentication";
-import addressRoute from "./addressesRoute";
 const usersRoute: Router = Router();
 
 
