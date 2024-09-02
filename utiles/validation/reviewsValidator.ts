@@ -7,14 +7,14 @@ import reviewsModel from "../../Models/reviewsModel";
 
 export const createReviewValidator: RequestHandler[] = [
   check('comment')
-    .notEmpty().withMessage('Comment is Required'),
+    .notEmpty().withMessage((val, { req }) => req.__('comment_req')),
     check('rating')
-    .notEmpty().withMessage('Rating is Required'),
+    .notEmpty().withMessage((val, { req }) => req.__('rate_req')),
     check('user')
-    .notEmpty().withMessage('User is Required')
+    .notEmpty().withMessage((val, { req }) => req.__('user_req'))
     .isMongoId().withMessage((val, { req }) => req.__('check_id')),
   check('product')
-    .notEmpty().withMessage('Product is Required')
+    .notEmpty().withMessage((val, { req }) => req.__('prod_req'))
     .isMongoId().withMessage((val, { req }) => req.__('check_id'))
     .custom(async (val,{req}) => {
         const review = await reviewsModel.findOne({user:req.user._id,product:val})

@@ -6,15 +6,15 @@ import validatorMiddleWare from "../../middlewares/validators";
 
 export const createProductValidator: RequestHandler[] = [
   check('name')
-    .notEmpty().withMessage('Product\' Name is Required')
+    .notEmpty().withMessage((val, { req }) => req.__('prod_name'))
     .isLength({ min: 2, max: 50 }).withMessage((val, { req }) => req.__('name_length')),
 
     check('description').optional()
-    .notEmpty().withMessage('Product\'s description is required' )
+    .notEmpty().withMessage((val, { req }) => req.__('prod_desc'))
     .isLength({min:15,max:500}),
 
     check('price')
-    .notEmpty().withMessage('Product\'s price is required' ).toFloat()
+    .notEmpty().withMessage((val, { req }) => req.__('prod_price')).toFloat()
     .custom((val: number) => {
       if (val <= 0 || val > 1000000) {
         throw new Error('Invalid Price')
@@ -23,7 +23,7 @@ export const createProductValidator: RequestHandler[] = [
     }),
 
     check('priceAfterDisc').optional()
-    .isNumeric().withMessage('Price must be number').toFloat()
+    .isNumeric().withMessage((val, { req }) => req.__('price_num')).toFloat()
     .custom((val: number) => {
       if (val <= 0 || val > 1000000) {
         throw new Error('Invalid Price')
@@ -32,7 +32,7 @@ export const createProductValidator: RequestHandler[] = [
     }),
 
   check('quantity').optional()
-    .isNumeric().withMessage('Quantity must be number').toInt()
+    .isNumeric().withMessage((val, { req }) => req.__('quant_num')).toInt()
     .custom((val: number) => {
       if (val < 0) {
         throw new Error('Invalid Quantity')
@@ -41,7 +41,7 @@ export const createProductValidator: RequestHandler[] = [
     }),
 
   check('category')
-    .notEmpty().withMessage('Category is Required')
+    .notEmpty().withMessage((val, { req }) => req.__('category_req'))
     .isMongoId().withMessage((val, { req }) => req.__('check_id'))
     .custom(async (val) => {
       const category = await categoriesModel.findById(val);
@@ -61,7 +61,7 @@ export const updateProductValidator: RequestHandler[] = [
     .isLength({ min: 15, max: 500 }),
 
   check('price').optional()
-    .isNumeric().withMessage('Price must be number').toFloat()
+    .isNumeric().withMessage((val, { req }) => req.__('price_num')).toFloat()
     .custom((val: number) => {
       if (val <= 0 || val > 1000000) {
         throw new Error('Invalid Price')
@@ -70,7 +70,7 @@ export const updateProductValidator: RequestHandler[] = [
     }),
 
   check('priceAfterDisc').optional()
-    .isNumeric().withMessage('Price must be number').toFloat()
+    .isNumeric().withMessage((val, { req }) => req.__('price_num')).toFloat()
     .custom((val: number) => {
       if (val <= 0 || val > 1000000) {
         throw new Error('Invalid Price')
@@ -79,7 +79,7 @@ export const updateProductValidator: RequestHandler[] = [
     }),
     
   check('quantity').optional()
-    .isNumeric().withMessage('Quantity must be number').toInt()
+    .isNumeric().withMessage((val, { req }) => req.__('quant_num')).toInt()
     .custom((val: number) => {
       if (val < 0) {
         throw new Error('Invalid Quantity')

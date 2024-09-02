@@ -10,7 +10,7 @@ import { ImagesFields } from "../interfaces/uploadedFields";
         {
             cb(null,true)
         } else{
-            cb(new ApiErrors('This file is not an image',400))
+            cb(new ApiErrors(`${req.__('not_image')}`,400))
         }
     }
     const upload = multer({storage: multerStorage,fileFilter:imageFilter});

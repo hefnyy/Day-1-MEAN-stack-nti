@@ -6,10 +6,10 @@ import validatorMiddleWare from "../../middlewares/validators";
 
 export const createSubcategoryValidator: RequestHandler[] = [
   check('name')
-    .notEmpty().withMessage('Subcategory Name is Required')
+    .notEmpty().withMessage((val, { req }) => req.__('sub_name'))
     .isLength({ min: 2, max: 50 }).withMessage((val, { req }) => req.__('name_length')),
   check('category')
-    .notEmpty().withMessage('Category is Required')
+    .notEmpty().withMessage((val, { req }) => req.__('category_req'))
     .isMongoId().withMessage((val, { req }) => req.__('check_id'))
     .custom(async (val) => {
       const category = await categoriesModel.findById(val);

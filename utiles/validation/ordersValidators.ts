@@ -4,7 +4,7 @@ import validatorMiddleWare from "../../middlewares/validators";
 
 export const createOrderValidator: RequestHandler[] = [
   check('address')
-  .notEmpty().withMessage('User address Required'),
+  .notEmpty().withMessage((val, { req }) => req.__('address_required')),
   validatorMiddleWare
 ]
 

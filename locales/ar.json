@@ -5,7 +5,39 @@
     "category_name":"حقل الاسم مطلوب",
     "name_length":"طول السم يجب ان يكون من 3 ل 50 حرف",
     "cart_not_found":"لم يتم العثور على هذا الحقل",
-    "order_not_found":"لم يتم العثور على هذا الحقل"
+    "order_not_found":"لم يتم العثور على هذا الحقل",
+    "name_required":"الاسم مطلوب",
+    "email_required":"هذا الحقل مطلوب",
+    "invalid_email":"غير صالح",
+    "email_exist":"موجود بالفعل",
+    "password_required":"هذا الحقل مطلوب",
+    "password_length":"كلمة المرور يجب ان تكون من 6 ل 20 حرف",
+    "currpassword_required":"هذا الحقل مطلوب",
+    "currpassword_length":"كلمة المرور يجب ان تكون من 6 ل 20 حرف",
+    "confirm_length":"كلمة المرور التأكيدية يجب ان تكون من 6 ل 20 حرف",
+    "confirm_required":"هذا الحقل مطلوب",
+    "prod_required":"هذا الحقل مطلوب",
+    "quant_required":"هذا الحقل مطلوب",
+    "quant_num":"الكمية يجب ان تكون رقم صحيح",
+    "prod_name":"هذا الحقل مطلوب",
+    "prod_price":"هذا الحقل مطلوب",
+    "prod_desc":"هذا الحقل مطلوب",
+    "price_num":"السعر يجب ان يكون رقم ",
+    "category_req":"هذا الحقل مطلوب",
+    "promo_req":"هذا الحقل مطلوب",
+    "invalid_date":" تاريخ غير صالح",
+    "disc_num":"الخصم يجب ان يكون رقم ",
+    "comment_req":"هذا الحقل مطلوب",
+    "rate_req":"هذا الحقل مطلوب",
+    "user_req":"هذا الحقل مطلوب",
+    "prod_req":"هذا الحقل مطلوب",
+    "sub_name":"هذا الحقل مطلوب",
+    "invalid_active":"غير صالح",
+    "not_image":"هذا الملف ليس صورة"
+
+
+
+
 
 
 }

@@ -4,6 +4,44 @@
     "category_name":"Category Name is Required",
     "name_length":"Name length must be between 3 and 50",
     "cart_not_found":"Cart is not found",
-    "order_not_found":"Cart is not found"
+    "order_not_found":"Cart is not found",
+    "name_required":"User Name is Required",
+    "email_required":"Email is Required",
+    "invalid_email":"Invalid Email",
+    "email_exist":"Invalid Email",
+    "password_required":"Password is required",
+    "password_length":"Password length must be between 6 and 20 char",
+    "confirm_length":"Confirm Password length must be between 6 and 20 char",
+    "confirm_required":"Confirm Password is required",
+    "currpassword_required":"Current Password is required",
+    "currpassword_length":"Current Password length must be between 6 and 20 char",
+    "prod_required":"Product is required",
+    "quant_required":"Quantity is required",
+    "quant_num":"Quantity must be number",
+    "address_required":"User address is Required",
+    "prod_name":"Product's Name is Required",
+    "prod_price":"Product's price is Required",
+    "prod_desc":"Product's description is Required",
+    "price_num":"price must be number",
+    "category_req":"Category is Required",
+    "promo_req":"Promo Code Name is Required",
+    "promo_expire_req":"Promo Code expire time is required",
+    "invalid_date":"Invalid Date",
+    "disc_num":"Discount must be a number",
+    "comment_req":"Comment is required",
+    "rate_req":"Rating is required",
+    "user_req":"User is required",
+    "prod_req":"Product is required",
+    "sub_name":"Subcategory Name is Required",
+    "invalid_active":"Invalid Active Value",
+    "not_image":"This file is not an image"
+
+
+
+
+
+
+
+
 
 }
