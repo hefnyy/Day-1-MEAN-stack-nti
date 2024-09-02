@@ -11,7 +11,7 @@ const usersSchema: Schema = new Schema<Users>({
   role: { type: String, required: true, enum: ['manager', 'admin', 'user'], default: 'user' },
   active: { type: Boolean, default: true },
   wishlist:[{type:Schema.Types.ObjectId,ref:'products'}],
-  address:[String],
+  // address:[String],
   phoneNumber:{type:Number,required:true}
   // address:[{type:Schema.Types.ObjectId,ref:'address'}],
   // passwordUpdatedAt: Date,

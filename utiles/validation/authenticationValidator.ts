@@ -25,6 +25,9 @@ export const signupValidator: RequestHandler[] = [
   check('confirmPassword')
     .notEmpty().withMessage((val, { req }) => req.__('confirm_required'))
     .isLength({ min: 6, max: 20 }).withMessage((val, { req }) => req.__('confirm_length')),
+    check('phoneNumber')
+    .notEmpty().withMessage((val, { req }) => req.__('phone_req'))
+    .isMobilePhone('ar-EG').withMessage((val, { req }) => req.__('invalid_phone')),
   validatorMiddleWare
 ]
 

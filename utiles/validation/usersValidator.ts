@@ -27,6 +27,9 @@ export const createUserValidator: RequestHandler[] = [
   check('confirmPassword')
     .notEmpty().withMessage((val, { req }) => req.__('confirm_required'))
     .isLength({ min: 6, max: 20 }).withMessage((val, { req }) => req.__('confirm_length')),
+  check('phoneNumber')
+    .notEmpty().withMessage((val, { req }) => req.__('phone_req'))
+    .isMobilePhone('ar-EG').withMessage((val, { req }) => req.__('invalid_phone')),
   validatorMiddleWare
 ]
 
@@ -36,6 +39,9 @@ export const updateUserValidator: RequestHandler[] = [
     .isLength({ min: 3, max: 50 }).withMessage((val, { req }) => req.__('name_length')),
   check('active').optional()
     .isBoolean().withMessage((val, { req }) => req.__('invalid_active')),
+    check('phoneNumber').optional()
+    .notEmpty().withMessage((val, { req }) => req.__('phone_req'))
+    .isMobilePhone('ar-EG').withMessage((val, { req }) => req.__('invalid_phone')),
     validatorMiddleWare
 ]
 

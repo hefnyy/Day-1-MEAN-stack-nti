@@ -34,14 +34,9 @@
     "prod_req":"Product is required",
     "sub_name":"Subcategory Name is Required",
     "invalid_active":"Invalid Active Value",
-    "not_image":"This file is not an image"
-
-
-
-
-
-
-
+    "not_image":"This file is not an image",
+    "phone_req":"Phone Number is required",
+    "invalid_phone":"Invalid Phone Number"
 
 
 }

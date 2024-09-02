@@ -21,7 +21,7 @@ const ordersSchema: Schema = new Schema<Orders>({
 
 ordersSchema.pre<Orders>(/^find/, function (next) {
   this.populate({ path: 'cartItems.product', select: 'name cover' })
-  this.populate({ path: 'user', select: 'name profileImage email' })
+  this.populate({ path: 'user', select: 'name phoneNumber profileImage email' })
   next()
 })
 
