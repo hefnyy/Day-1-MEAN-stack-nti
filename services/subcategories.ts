@@ -30,7 +30,7 @@ export const uploadSubsubcategoryImage = uploadOneImage('subcategoryImage');
 export const resizeSubcategoryImage = asyncHandler(async (req:Request, res: Response, next:NextFunction) => {
   if (req.file) {
     const subcategoryImage: string = `SubCategory image-${Date.now()}.jpeg`
-    await sharp(req.file.buffer).toFormat('jpeg').jpeg({ quality: 100 }).toFile(`uploads/subcategories/${subcategoryImage}`);
+    await sharp(req.file.buffer).toFormat('jpeg').jpeg({ quality: 100 }).toFile(`uploads/subcategory/${subcategoryImage}`);
     req.body.subcategoryImage = subcategoryImage;
   }
   next();
