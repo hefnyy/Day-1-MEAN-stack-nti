@@ -31,20 +31,21 @@ export const signup = asyncHandler(async (req: Request, res: Response, next: Nex
       token = req.headers.authorization.split(' ')[1];
     } else { return next(new ApiErrors('You Have To Login first to access the application', 401)) }
     // 2- check if token not expired
-    console.log("before decoded");
+    // console.log("before decoded");
     const decodedToken: any = Jwt.verify(token, process.env.JWT_PRIVATE_KEY!);
-    console.log(decodedToken);
+    // console.log(decodedToken);
     // 3- check if user exist
     const currentUser = await usersModel.findById(decodedToken._id);
     if (!currentUser) { return next(new ApiErrors("This User doesn't exist", 401)) }
     // 4- check if password updated
     if (currentUser.passwordUpdatedAt instanceof Date) {
-      const updatedPasswordTime: number = (currentUser.passwordUpdatedAt.getTime() / 1000);
+      const updatedPasswordTime: number = parseInt((currentUser.passwordUpdatedAt.getTime() / 1000).toString());
 
       if (updatedPasswordTime > decodedToken.iat) { 
         return next(new ApiErrors('Please try to login again', 401)) }
     }
     req.user = currentUser;
+    // console.log('after protect routes');
     next();
   });
 
@@ -59,6 +60,7 @@ export const signup = asyncHandler(async (req: Request, res: Response, next: Nex
     if (!req.user?.active) {
       return next(new ApiErrors('Your account is not active', 403))
     }
+    // console.log('after is active');
     next();
   });
 
@@ -92,7 +94,10 @@ export const signup = asyncHandler(async (req: Request, res: Response, next: Nex
     }
     const decodedToken: any = Jwt.verify(resetToken, process.env.JWT_PRIVATE_KEY!);
     const hasahedResetCode: string = crypto.createHash('sha256').update(req.body.resetCode).digest('hex');
-    const user = await usersModel.findOne({_id:decodedToken,resetCode: hasahedResetCode,resetCodeExpireTime:{$gt: Date.now()}})
+    const user = await usersModel.findOne({
+      _id:decodedToken._id,
+      resetCode: hasahedResetCode,
+      resetCodeExpireTime:{$gt: Date.now()}})
     if(!user){
       return next(new ApiErrors('Invalid or Expired Reset Code',400))
     };

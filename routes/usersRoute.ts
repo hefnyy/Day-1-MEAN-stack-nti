@@ -6,8 +6,10 @@ const usersRoute: Router = Router();
 
 
 usersRoute.use(protectRoutes,isActive)
-usersRoute.get('/me',getLoggedInUserData,getUser);
-usersRoute.put('/changemydata',updateLoggedInUserValidator,updateLoggedInUserData);
+// usersRoute.get('/me',getLoggedInUserData,getUser);
+usersRoute.get('/me', getLoggedInUserData ,getUser);
+
+usersRoute.put('/changemydata',uploadUserImageProfile, resizeUserImage, updateLoggedInUserValidator,updateLoggedInUserData);
 usersRoute.put('/changemypassword',changeLoggedInUserPasswordValidator,loggedInUserChangePassword);
 usersRoute.delete('/deleteme',allowedTo('user'),getLoggedInUserData,deleteUser);
 

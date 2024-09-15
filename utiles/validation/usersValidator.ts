@@ -78,16 +78,19 @@ export const changeUserPasswordValidator: RequestHandler[] = [
 export const changeLoggedInUserPasswordValidator: RequestHandler[] = [
   check('currentPassword')
   .notEmpty().withMessage((val, { req }) => req.__('currpassword_required'))
-  .isLength({ min: 6, max: 20 }).withMessage((val, { req }) => req.__('currpassword_length')),
+  .isLength({ min: 6, max: 20 }).withMessage((val, { req }) => req.__('currpassword_length'))
+  .custom(async (val:string,{req}) => {
+    const user = await usersModel.findById(req.user._id);
+    const isCorrect: boolean = await bcrypt.compare(val, user!.password);
+    if (!isCorrect) {
+      throw new Error('Current password is not valid')
+    }
+  }),
   check('password')
     .notEmpty().withMessage((val, { req }) => req.__('password_required'))
     .isLength({ min: 6, max: 20 }).withMessage((val, { req }) => req.__('password_length'))
     .custom(async (val: string, { req }) => {
-      const user = await usersModel.findById(req.user._id);
-      const isCorrect: boolean = await bcrypt.compare(req.body.currentPassword,user!.password);
-      if(!isCorrect){
-        throw new Error('Current password is not valid')
-      }
+
       if (val !== req.body.confirmPassword) { 
         throw new Error("Passwords doesn't match") 
       }

@@ -17,9 +17,11 @@ export const uploadUserImageProfile = uploadOneImage('profileImage');
 export const resizeUserImage = asyncHandler(async (req:Request, res: Response, next:NextFunction) => {
     if (req.file) {
       const profileImageName: string = `User profile picture image-${Date.now()}.jpeg`
-      await sharp(req.file.buffer).toFormat('jpeg').jpeg({ quality: 100 }).toFile(`uploads/users/${profileImageName}`);
+      await sharp(req.file.buffer).toFormat('jpeg').jpeg({ quality: 90 }).toFile(`uploads/users/${profileImageName}`);
       req.body.profileImage = profileImageName;
+      console.log(profileImageName);
     }
+    
     next();
   });
 
@@ -32,7 +34,7 @@ export const deleteUser = removeOne<Users>(usersModel);
 export const updateUser = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const user = await usersModel.findByIdAndUpdate(req.params.id, {
       name: req.body.name,
-      image: req.body.profileImage,
+      profileImage: req.body.profileImage,
       active: req.body.active
     }, 
     { new: true })
@@ -51,25 +53,32 @@ export const updateUser = asyncHandler(async (req: Request, res: Response, next:
     res.status(200).json({ message: 'User\'s password has been changed successfully', data: user })
   });
 
-  export const getLoggedInUserData = asyncHandler ((req:Request, res: Response, next: NextFunction) => {
-    req.params.id = req.user?._id!.toString();
-    next();
-  });
+  // export const getLoggedInUserData = asyncHandler ((req:Request, res: Response, next: NextFunction) => {
+  //   req.params.id = req.user?._id!.toString();
+  //   next();
+  // });
+
+export const getLoggedInUserData = asyncHandler ((req: Request, res: Response, next: NextFunction) => {
+  req.params.id = req.user?._id!.toString();
+  // console.log('after getloggeduser');
+  next();
+})
+
 
   export const updateLoggedInUserData = asyncHandler(async (req:Request, res: Response, next: NextFunction) => {
     const user = await usersModel.findByIdAndUpdate(req.user?._id, {
       name: req.body.name,
-      image: req.body.profileImage
+      profileImage: req.body.profileImage
     }, 
     { new: true })
     res.status(200).json({ data: user, message: 'User has been updated successfully' })
   });
 
   export const loggedInUserChangePassword = asyncHandler (async (req:Request, res: Response, next: NextFunction) => {
-    const user = await usersModel.findByIdAndUpdate(req.user?.id, {
+    const user = await usersModel.findByIdAndUpdate(req.user?._id, {
       password: await bcrypt.hash(req.body.password, 12),
       passwordUpdatedAt: Date.now()
     }, { new: true })
-    const token:string= createToken(user?.id)
-    res.status(200).json({ message: 'User\'s password has been changed successfully', token })    
+    const token:string= createToken(user?._id)
+    res.status(200).json({ message: 'User\'s password has been changed successfully', token })
   });

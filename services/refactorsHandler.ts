@@ -34,7 +34,7 @@ export const getOne = <modelType>(model: mongoose.Model<any>,population?:string)
   if (!document) {
     return next(new ApiErrors(`${req.__('not_found')}`, 404))
   }
-  document.save();
+  // document.save();
   res.status(200).json({ data: document });
 })
 export const createOne = <modelType>(model: mongoose.Model<any>) => asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<void> => {

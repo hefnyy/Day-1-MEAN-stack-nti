@@ -48,6 +48,9 @@ reviewsSchema.post<Reviews>('findOneAndDelete', async function(doc) {
     
     next()
   })
-
+reviewsSchema.pre<Reviews>('find', function (next) {
+  this.populate({ path: 'product', select: 'name cover' })
+  next()
+})
 
 export default model<Reviews>('reviews',reviewsSchema)

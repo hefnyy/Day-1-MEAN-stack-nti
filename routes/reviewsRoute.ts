@@ -10,6 +10,8 @@ reviewsRoute.route('/')
 .get(filterReviews,getAllReviews)
 .post(protectRoutes,isActive,allowedTo('user'),setProductAndUserId,createReviewValidator,createReview);
 
+reviewsRoute.route('/myreviews').get(protectRoutes, isActive, allowedTo('user'), filterReviews, getAllReviews);
+
 reviewsRoute.route('/:id')
 .get(getReviewValidator,getReview)
 .put(protectRoutes,isActive,allowedTo('user'),updateReviewValidator,updateReview)

@@ -21,8 +21,8 @@ const productsSchema: Schema = new Schema<Products>({
 productsSchema.virtual('reviews', { ref: 'reviews', foreignField: 'product', localField: '_id' })
 
 productsSchema.pre<Products>(/^find/, function (next) {
-    this.populate({ path: 'category', select: 'name -_id' })
-    this.populate({ path: 'subcategory', select: 'name' })
+  this.populate({ path: 'category', select: 'name -_id' })
+  this.populate({ path: 'subcategory', select: 'name' })
     next()
   
   })

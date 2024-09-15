@@ -7,11 +7,14 @@ import { Reviews } from "../interfaces/reviews";
 
 
 export const filterReviews = (req: Request, res: Response, next: NextFunction) => {
-    let filterData: FilterData = {};
-    if (req.params.productId) { filterData.product = req.params.productId };
-    req.filterData = filterData;
-    next();
-  }
+  let filterData: FilterData = {};
+  if (req.params.productId) { 
+    filterData.product = req.params.productId };
+  if (req.user?.role === 'user' && !req.params.productId) { 
+    filterData.user = req.user.id };
+  req.filterData = filterData;
+  next();
+}
 
 export const createReview = createOne<Reviews>(reviewsModel);
 
