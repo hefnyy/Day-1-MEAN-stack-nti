@@ -11,7 +11,7 @@ import sendEmail from "../utiles/sendEmail";
 
 export const signup = asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const user: Users = await usersModel.create(req.body);
-    const token = createToken(user._id);
+    const token = createToken(user._id,user.role);
     res.status(201).json({ token, data: user })
   });
 
@@ -20,7 +20,7 @@ export const signup = asyncHandler(async (req: Request, res: Response, next: Nex
     if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
       return next(new ApiErrors('Invalid Email or Password', 401));
     }
-    const token = createToken(user._id);
+    const token = createToken(user._id,user.role);
     res.status(200).json({ token, message: 'Logged in has been successfully' });
   });  
 

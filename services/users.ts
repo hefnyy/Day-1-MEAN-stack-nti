@@ -79,6 +79,6 @@ export const getLoggedInUserData = asyncHandler ((req: Request, res: Response, n
       password: await bcrypt.hash(req.body.password, 12),
       passwordUpdatedAt: Date.now()
     }, { new: true })
-    const token:string= createToken(user?._id)
+    const token:string= createToken(user?._id,user?.role!)
     res.status(200).json({ message: 'User\'s password has been changed successfully', token })
   });
